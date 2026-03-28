@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>React Image Gallery</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script> <!-- React -->
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script> <!-- ReactDOM -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> <!-- Babel for JSX -->
+
+  <style>
+    body { font-family: Arial; background: #f2f2f2; } /* Page styling */
+
+    .container { width: 600px; margin: auto; text-align: center; } /* Layout */
+
+    .preview { width: 100%; height: 300px; object-fit: cover; margin-bottom: 20px; border-radius: 10px; } /* Large image */
+
+    .gallery { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; } /* Flexbox layout */
+
+    .thumb { width: 100px; height: 80px; object-fit: cover; cursor: pointer; border-radius: 5px; transition: transform 0.3s; } /* Thumbnail */
+
+    .thumb:hover { transform: scale(1.1); } /* Hover effect */
+  </style>
+</head>
+
+<body>
+  <div id="root"></div> <!-- Root -->
+
+  <script type="text/babel">
+
+    // Functional component
+    const Gallery = () => {
+
+      const images = [ /* Dynamic image sources */
+        "https://picsum.photos/id/1015/600/300",
+        "https://picsum.photos/id/1016/600/300",
+        "https://picsum.photos/id/1018/600/300",
+        "https://picsum.photos/id/1020/600/300"
+      ];
+
+      const [selected, setSelected] = React.useState(images[0]); // State for selected image
+
+      return (
+        <div className="container">
+
+          <h1>Image Gallery</h1>
+
+          <img src={selected} className="preview" /> {/* Large preview */}
+
+          <div className="gallery">
+            {images.map((img, index) => (
+              <img 
+                key={index} /* key prop */
+                src={img} 
+                className="thumb"
+                onClick={() => setSelected(img)} /* Event handling */
+              />
+            ))}
+          </div>
+
+          <p>
+            REG NO: 24BCE2038 <br/>
+            NAME: GURUPAVAN KUMAR
+          </p>
+
+        </div>
+      );
+    };
+
+    // Render
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<Gallery />);
+
+  </script>
+</body>
+</html>

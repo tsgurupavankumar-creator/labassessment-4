@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>React Todo List</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script> <!-- React -->
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script> <!-- ReactDOM -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> <!-- Babel for JSX -->
+
+  <style>
+    body { font-family: Arial; background: #eef2f3; } /* Page styling */
+
+    .box {
+      width: 350px;
+      margin: 100px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+    } /* Container */
+
+    input {
+      padding: 8px;
+      width: 70%;
+      margin-right: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    } /* Input */
+
+    button {
+      padding: 8px 12px;
+      background: #2f80ed;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    } /* Button */
+
+    button:hover { background: #1366d6; } /* Hover */
+
+    ul { list-style: none; padding: 0; } /* List */
+
+    li {
+      margin: 8px 0;
+      padding: 8px;
+      background: #f7f7f7;
+      border-radius: 5px;
+    } /* Task item */
+  </style>
+</head>
+
+<body>
+  <div id="root"></div> <!-- Root -->
+
+  <script type="text/babel">
+
+    // Functional component
+    const TodoApp = () => {
+
+      const [task, setTask] = React.useState(""); // String state
+      const [tasks, setTasks] = React.useState([]); // Array state
+
+      // Add task
+      const addTask = () => {
+        if (task.trim() === "") return; // Prevent empty task
+        setTasks([...tasks, task]); // Spread operator for immutability
+        setTask(""); // Clear input
+      };
+
+      return (
+        <div className="box">
+
+          <h1>Todo List</h1>
+
+          <input
+            type="text"
+            value={task}
+            onChange={(e) => setTask(e.target.value)} /* Controlled input */
+            placeholder="Enter a task"
+          />
+
+          <button onClick={addTask}>Add</button> {/* Event handling */}
+
+          <ul>
+            {tasks.map((t, index) => (
+              <li key={index}>{t}</li> /* List rendering with key */
+            ))}
+          </ul>
+
+          <p>
+            REG NO: 24BCE2038 <br/>
+            NAME: GURUPAVAN KUMAR
+          </p>
+
+        </div>
+      );
+    };
+
+    // Render
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<TodoApp />);
+
+  </script>
+</body>
+</html>

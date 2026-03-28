@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"> <!-- Character encoding -->
+  <title>React Book Explorer</title> <!-- Page title -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script> <!-- React -->
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script> <!-- ReactDOM -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> <!-- Babel -->
+
+  <style>
+    body { font-family: Arial; background: #f4f6f8; margin: 0; } /* Page styling */
+    .header { background: #6c5ce7; color: white; padding: 20px; text-align: center; } /* Header */
+    .container { width: 90%; margin: 20px auto; text-align: center; } /* Container */
+    input { padding: 10px; width: 60%; border-radius: 5px; border: 1px solid #ccc; } /* Input */
+    button { padding: 10px; margin-left: 5px; background: #00b894; color: white; border: none; border-radius: 5px; cursor: pointer; } /* Button */
+    button:hover { background: #019875; } /* Hover */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; } /* Grid layout */
+    .card { background: white; padding: 15px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); } /* Card */
+    img { width: 100%; height: 250px; object-fit: cover; } /* Image */
+  </style>
+</head>
+
+<body>
+  <div id="root"></div> <!-- Root -->
+
+  <script type="text/babel">
+
+    const fetchBooks = async (query) => { // Utility function
+      try {
+        const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`); // API call
+        const data = await res.json(); // Convert JSON
+        return data.items || []; // Return books
+      } catch {
+        return []; // Handle error
+      }
+    };
+
+    const Header = () => ( // Header component
+      <div className="header">
+        <h1>📚 Book Explorer</h1>
+      </div>
+    );
+
+    const Search = ({ query, setQuery, onSearch }) => ( // Search component
+      <div>
+        <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search books..." /> {/* Controlled input */}
+        <button onClick={onSearch}>Search</button> {/* Search trigger */}
+      </div>
+    );
+
+    const BookCard = ({ book }) => { // Individual book
+      const info = book.volumeInfo; // Extract info
+
+      return (
+        <div className="card">
+          <img src={info.imageLinks?.thumbnail || ""} alt="Book" /> {/* Cover */}
+          <h3>{info.title}</h3> {/* Title */}
+          <p>Author: {info.authors?.join(", ") || "N/A"}</p> {/* Author */}
+          <p>Publisher: {info.publisher || "N/A"}</p> {/* Publisher */}
+          <p>Year: {info.publishedDate?.substring(0,4) || "N/A"}</p> {/* Year */}
+        </div>
+      );
+    };
+
+    const BookList = ({ books }) => ( // List component
+      <div className="grid">
+        {books.map((b, i) => <BookCard key={i} book={b} />)} {/* Map books */}
+      </div>
+    );
+
+    const App = () => { // Main component
+      const [query, setQuery] = React.useState(""); // Search state
+      const [books, setBooks] = React.useState([]); // Books state
+
+      const handleSearch = async () => { // Search handler
+        if (!query.trim()) return; // Validation
+        const data = await fetchBooks(query); // Fetch books
+        setBooks(data); // Update state
+      };
+
+      return (
+        <div>
+          <Header /> {/* Header */}
+
+          <div className="container">
+            <Search query={query} setQuery={setQuery} onSearch={handleSearch} /> {/* Search */}
+            <BookList books={books} /> {/* Display books */}
+
+            <p>
+              REG NO: 24BCE2038 <br/>
+              NAME: GURUPAVAN KUMAR
+            </p>
+          </div>
+        </div>
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById("root")); // Root
+    root.render(<App />); // Render
+
+  </script>
+</body>
+</html>

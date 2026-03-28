@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>React Grade Calculator</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script> <!-- React -->
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script> <!-- ReactDOM -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> <!-- Babel -->
+
+  <style>
+    body { font-family: Arial; background: linear-gradient(to right, #74ebd5, #ACB6E5); } /* Gradient background */
+
+    .box { 
+      width: 320px; 
+      margin: 100px auto; 
+      padding: 20px; 
+      background: #ffffff; 
+      text-align: center; 
+      border-radius: 12px; 
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.2); 
+    } /* Styled container */
+
+    h1 { color: #333; } /* Title */
+
+    input { 
+      margin: 8px; 
+      padding: 8px; 
+      width: 80%; 
+      border: 1px solid #ccc; 
+      border-radius: 5px; 
+    } /* Inputs */
+
+    button { 
+      margin: 10px; 
+      padding: 10px; 
+      width: 60%; 
+      background: #ff7e5f; 
+      color: white; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer; 
+    } /* Button */
+
+    button:hover { background: #eb5757; } /* Hover effect */
+
+    .avg { color: #2d9cdb; } /* Average color */
+
+    .gradeA { color: #27ae60; } /* A grade */
+    .gradeB { color: #2f80ed; } /* B grade */
+    .gradeC { color: #f2c94c; } /* C grade */
+    .gradeD { color: #f2994a; } /* D grade */
+    .gradeF { color: #eb5757; } /* F grade */
+
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+
+    const GradeCalculator = () => {
+
+      const [m1, setM1] = React.useState("");
+      const [m2, setM2] = React.useState("");
+      const [m3, setM3] = React.useState("");
+      const [avg, setAvg] = React.useState(0);
+      const [grade, setGrade] = React.useState("");
+
+      const calculate = () => {
+        const average = (Number(m1) + Number(m2) + Number(m3)) / 3;
+        setAvg(average);
+
+        if (average >= 90) setGrade("A");
+        else if (average >= 75) setGrade("B");
+        else if (average >= 60) setGrade("C");
+        else if (average >= 50) setGrade("D");
+        else setGrade("F");
+      };
+
+      // Dynamic class for grade color
+      const gradeClass =
+        grade === "A" ? "gradeA" :
+        grade === "B" ? "gradeB" :
+        grade === "C" ? "gradeC" :
+        grade === "D" ? "gradeD" : "gradeF";
+
+      return (
+        <div className="box">
+
+          <h1>Grade Calculator</h1>
+
+          <input type="number" value={m1} onChange={(e) => setM1(e.target.value)} placeholder="Subject 1" />
+          <input type="number" value={m2} onChange={(e) => setM2(e.target.value)} placeholder="Subject 2" />
+          <input type="number" value={m3} onChange={(e) => setM3(e.target.value)} placeholder="Subject 3" />
+
+          <button onClick={calculate}>Calculate</button>
+
+          <h2 className="avg">Average: {avg.toFixed(2)}</h2>
+          <h2 className={gradeClass}>Grade: {grade}</h2>
+
+          <p>
+            REG NO: 24BCE2038 <br/>
+            NAME: GURUPAVAN KUMAR
+          </p>
+
+        </div>
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<GradeCalculator />);
+
+  </script>
+</body>
+</html>

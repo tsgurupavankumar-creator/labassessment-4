@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>React Personalized Welcome</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script> <!-- React -->
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script> <!-- ReactDOM -->
+</head>
+
+<body>
+  <div id="root"></div> <!-- Root element -->
+
+  <script>
+    
+    // Functional component using props
+    function Welcome(props) {
+      return React.createElement(
+        "div",
+        { style: { color: "blue", fontFamily: "Arial", textAlign: "center" } }, // Inline styling
+
+        React.createElement("h1", null, "Hello " + props.name + " from " + props.city + "!"), // Props usage
+
+        React.createElement("p", null,
+          "Welcome to your React application. This message is dynamically rendered using functional components and props."
+        ),
+
+        React.createElement("p", null,
+          "REG NO: 24BCE2038", React.createElement("br"),
+          "NAME: GURUPAVAN KUMAR"
+        )
+      );
+    }
+
+    // Create root
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+
+    // Render component
+    root.render(React.createElement(Welcome, { name: "Gurupavan Kumar", city: "Vellore" }));
+
+  </script>
+</body>
+</html>

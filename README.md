@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 📚 Folio — Book Explorer
 
 A beautiful book discovery app powered by the **Open Library API**. No API key required.
@@ -59,3 +60,26 @@ Uses the free [Open Library API](https://openlibrary.org/developers/api) — no 
 - Search: `https://openlibrary.org/search.json`
 - Book details: `https://openlibrary.org/works/{id}.json`
 - Covers: `https://covers.openlibrary.org/b/id/{id}-M.jpg`
+=======
+# 🌍 Atlas — Country Explorer
+
+Explore 250+ countries. No API key required — uses the free RestCountries API.
+
+## Quick Start
+```bash
+npm install
+npm run dev
+# Opens at http://localhost:3001
+```
+
+## Features
+- Browse all 250+ countries in a card grid
+- Search by country name or capital
+- Filter by region (Africa, Asia, Europe, etc.)
+- Sort by name (A–Z) or population
+- Click any card → detailed modal with flag, currencies, languages, timezones, borders
+- Click border countries to navigate between them
+
+## API Used
+https://restcountries.com — completely free, no key needed.
+>>>>>>> 2b52755ba358ab32d5133f86d7ec41847f7c7c00
